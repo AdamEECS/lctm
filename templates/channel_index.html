@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Channel List</title>
+</head>
+<body>
+<form action="{{ url_for('.add') }}" method="post">
+    <input name="name">
+    <br>
+    <textarea name="description"></textarea>
+    <br>
+    <button>添加频道</button>
+</form>
+<h2>频道列表</h2>
+{% for c in channel_list %}
+<div>
+    <span>{{ c.name }}</span>
+    <a href="{{ url_for('.delete', id=c.id) }}">删除</a>
+    <a href="{{ url_for('.edit', id=c.id) }}">编辑</a>
+</div>
+{% endfor %}
+</body>
+</html>

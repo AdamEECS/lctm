@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Channel Edit</title>
+</head>
+<body>
+<form action="{{ url_for('.update', id=channel.id) }}" method="post">
+    <input type="hidden" value="{{ channel.id }}">
+    <input name="name" value="{{ channel.name }}">
+    <br>
+    <textarea name="description">{{ channel.description }}</textarea>
+    <br>
+    <button>修改频道</button>
+</form>
+</body>
+</html>
