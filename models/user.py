@@ -8,7 +8,7 @@ from . import db
 class User(db.Model, ModelMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String())
+    username = db.Column(db.String(20))
 
     channel = db.relationship('Channel', backref='user')
     chats = db.relationship('Chat', backref='user')
