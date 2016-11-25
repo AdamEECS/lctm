@@ -25,13 +25,13 @@ class User(db.Model, ModelMixin):
         if not valid_username:
             message = '用户名已经存在'
             msgs.append(message)
-        elif not valid_username_len:
+        if not valid_username_len:
             message = '用户名长度必须大于等于 6'
             msgs.append(message)
-        elif not valid_password_len:
-            message = '密码长度必须大雨等于 6'
+        if not valid_password_len:
+            message = '密码长度必须大于等于 6'
             msgs.append(message)
-        elif not valid_captcha:
+        if not valid_captcha:
             message = '验证码必须输入 3'
             msgs.append(message)
         status = valid_username and valid_username_len and valid_password_len and valid_captcha
