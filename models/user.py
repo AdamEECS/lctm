@@ -8,7 +8,7 @@ from . import db
 class User(db.Model, ModelMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String())
+    username = db.Column(db.String(20))
 
     channel = db.relationship('Channel', backref='user')
     chats = db.relationship('Chat', backref='user')
@@ -25,13 +25,13 @@ class User(db.Model, ModelMixin):
         if not valid_username:
             message = '用户名已经存在'
             msgs.append(message)
-        elif not valid_username_len:
+        if not valid_username_len:
             message = '用户名长度必须大于等于 6'
             msgs.append(message)
-        elif not valid_password_len:
-            message = '密码长度必须大雨等于 6'
+        if not valid_password_len:
+            message = '密码长度必须大于等于 6'
             msgs.append(message)
-        elif not valid_captcha:
+        if not valid_captcha:
             message = '验证码必须输入 3'
             msgs.append(message)
         status = valid_username and valid_username_len and valid_password_len and valid_captcha
