@@ -64,4 +64,4 @@ if __name__ == '__main__':
     configure_app()
     manager.run()
 
-# (gunicorn --worker-class=gevent -t 4 app:app -b 0.0.0.0:8000 &)
+# (gunicorn wsgi --worker-class=gevent -t 4 -b 0.0.0.0:8000 &)
