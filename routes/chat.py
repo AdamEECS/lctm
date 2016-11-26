@@ -43,6 +43,7 @@ def add():
     }
     m = Model(r)
     m.save()
+    print('add chat', m)
     message = json.dumps(r, ensure_ascii=False)
     red.publish(chat_channel, message)
     return 'OK'
@@ -51,4 +52,5 @@ def add():
 @main.route('/subscribe')
 def subscribe():
     s = stream()
-    return Response(s, mimetype='text/event-stream')
+    mime = 'text/event-stream'
+    return Response(s, mimetype=mime)

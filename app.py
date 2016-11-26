@@ -26,7 +26,7 @@ def configure_app():
     # 自行添加
     import config
     app.secret_key = config.secret_key
-    app.config['SQLALCHEMY_DATABASE_URI'] = config.secret_key
+    app.config['SQLALCHEMY_DATABASE_URI'] = config.db_uri
     db.init_app(app)
     register_routes(app)
 
