@@ -18,7 +18,7 @@ var scrollToBottom = function (selector) {
 };
 
 var chatItemTemplate = function (chat) {
-    var name = chat.name;
+    var name = chat.username;
     var content = chat.content;
     var time = chat.created_time;
     var t = `

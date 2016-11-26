@@ -62,6 +62,7 @@ def add():
         'content': content,
         'channel': channel,
         'created_time': current_time(),
+        'username': u.username,
     }
     m = Model(r)
     m.user_id = u.id
