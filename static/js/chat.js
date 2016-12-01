@@ -1,3 +1,6 @@
+var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+
 var chatStore = {
     '大厅': [],
     '游戏': [],
@@ -87,36 +90,46 @@ var chatResponse = function (r) {
     })
 };
 
+
 var subscribe = function () {
-    var sse = new EventSource("/chat/subscribe");
-    sse.onmessage = function (e) {
-        log(e, e.data);
-        chatResponse(e.data);
-    };
+    // var sse = new EventSource("/chat/subscribe");
+    // sse.onmessage = function (e) {
+    //     log(e, e.data);
+    //     chatResponse(e.data);
+    // };
+
+    // websocket
+    socket.on('message', function(data) {
+      chatResponse(JSON.stringify(data));
+    });
 };
 
 var sendMessage = function () {
     var name = $('#id-input-name').val();
     var content = $('#id-input-content').val();
     var message = {
-        name: name,
+        username: name,
         content: content,
         channel: currentChannel,
     };
 
-    var request = {
-        url: '/chat/add',
-        type: 'post',
-        contentType: 'application/json',
-        data: JSON.stringify(message),
-        success: function (r) {
-            log('success', r);
-        },
-        error: function (err) {
-            log('error', err);
-        }
-    };
-    $.ajax(request);
+    // var request = {
+    //     url: '/chat/add',
+    //     type: 'post',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(message),
+    //     success: function (r) {
+    //         log('success', r);
+    //     },
+    //     error: function (err) {
+    //         log('error', err);
+    //     }
+    // };
+    // $.ajax(request);
+
+    // websocket
+    socket.emit('text', message);
+
 };
 
 var changeChannel = function (channel) {
@@ -177,7 +190,7 @@ var longTimeAgo = function () {
         $(e).text(s);
     });
 };
-
+//
 var __main = function () {
     subscribe();
     bindActions();

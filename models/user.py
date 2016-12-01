@@ -24,6 +24,7 @@ class User(db.Model, ModelMixin):
 
     def valid(self):
         valid_username = User.query.filter_by(username=self.username).first() is None
+        print(self.username, self.password)
         valid_username_len = len(self.username) >= 3
         valid_password_len = len(self.password) >= 3
         # valid_captcha = self.captcha == '3'

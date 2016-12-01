@@ -30,9 +30,12 @@ def login():
 def register():
     form = request.form
     u = User(form)
-    if u.valid():
+    status, msgs = u.valid()
+    if status is True:
         u.save()
         session['uid'] = u.id
+        # default channel is water
+        session['room'] = chat_channel
         return redirect(url_for('chat.index'))
     else:
-        return redirect(url_for('.index'))
+        return render_template('login.html', msgs=msgs)
