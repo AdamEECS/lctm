@@ -7,10 +7,11 @@
 <body>
     <div>
         <!-- html5 可以在按钮中写 action -->
+        {{ msgs }}
         <form method="post">
             <input type="text" name="username">
             <br>
-            <input type="text" name="username">
+            <input type="text" name="password">
             <br>
             <button type="submit" formaction="{{ url_for('user.login') }}">登录</button>
             <button type="submit" formaction="{{ url_for('user.register') }}">注册</button>

@@ -28,7 +28,6 @@ gunicorn wsgi --worker-class=gevent -t 4 -b 0.0.0.0:8000
 ## windows 开发
 *放弃 windows*
 
-
 1. 下载虚拟机(vbox,vmware), 运行Linux, 比如 ubuntu
 2. 安装redis (apt-get install redis-server)
 3. git clone 项目
