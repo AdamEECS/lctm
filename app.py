@@ -33,6 +33,7 @@ def configure_app():
     import config
     app.secret_key = config.secret_key
     app.config['SQLALCHEMY_DATABASE_URI'] = config.db_uri
+    app.config['USER_AVATARS_DIR'] = config.user_avatar_dir
     db.init_app(app)
     register_routes(app)
     # init socket app
