@@ -3,13 +3,14 @@ import os
 
 from . import ModelMixin
 from . import db
-
+from . import app
 
 class User(db.Model, ModelMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20))
     password = db.Column(db.String(20))
+    avatar = db.Column(db.String(20), default='default.png')
 
     channel = db.relationship('Channel', backref='user', lazy='dynamic')
     chats = db.relationship('Chat', backref='user', lazy='dynamic')
@@ -44,3 +45,13 @@ class User(db.Model, ModelMixin):
         # status = valid_username and valid_username_len and valid_password_len and valid_captcha
         status = valid_username and valid_username_len and valid_password_len
         return status, msgs
+
+
+    def update_avatar(self, avatar):
+        filename = 'avatar_' + self.username + '.' + avatar.filename.split('.')[-1]
+        path = app.config['USER_AVATARS_DIR'] + filename
+        print(os.getcwd())
+        avatar.save(path)
+        self.avatar = '/' + path
+        self.save()
+        pass

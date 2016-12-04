@@ -1,6 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 import time
 
+from flask import current_app
+
+app = current_app
+
 
 db = SQLAlchemy()
 
