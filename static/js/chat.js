@@ -1,4 +1,4 @@
-var socket = io.connect('http://' + document.domain + ':' + location.port);
+var socket = io('http://' + document.domain + ':' + location.port);
 
 
 var chatStore = {
@@ -6,7 +6,15 @@ var chatStore = {
     '游戏': [],
     '灌水': [],
 };
-var currentChannel = '';
+
+var initChatStore = function() {
+  $('.rc-channel').map(function() {
+    var channel = $(this).find("a").text();
+    chatStore[channel] = [];
+  })
+}
+
+var currentChannel = '大厅';
 
 var log = function () {
     console.log.apply(console, arguments);
@@ -63,9 +71,24 @@ var chatItemTemplate = function (chat) {
             </div>
         </div>
         `;
+      var staticFileURLPreix = location.origin + '/static/'
+      var new_t = `<div class="chat-item">
+                      <div class="user">
+                          <div class="user-avatar"><img src="${staticFileURLPreix + avatar}" class="user-avatar"></div>
+                          <div class="user-info">
+                              <div class="user-name">${name}</div>
+                              <div class="pass-time" href="#">
+                                  <time data-time="${time}"></time>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="user_content">
+                          ${content}
+                      </div>
+                  </div>`
     }
 
-    return t;
+    return new_t;
 };
 
 var insertChats = function (chats) {
@@ -86,7 +109,13 @@ var insertChatItem = function (chat) {
 
 var chatResponse = function (r) {
     var chat = JSON.parse(r);
-    chatStore[chat.channel].push(chat);
+    try {
+      chatStore[chat.channel].push(chat);
+    }
+    catch(err) {
+      chatStore[chat.channel] = [];
+      chatStore[chat.channel].push(chat);
+    }
     if (chat.channel == currentChannel) {
         insertChatItem(chat);
     }
@@ -111,7 +140,6 @@ var subscribe = function () {
     //     chatResponse(e.data);
     // };
 
-    // websocket
     socket.on('message', function(data) {
       chatResponse(JSON.stringify(data));
     });
@@ -141,6 +169,7 @@ var sendMessage = function () {
     // $.ajax(request);
 
     // websocket
+    // socket.emit('text', message);
     socket.emit('text', message);
 
 };
@@ -154,11 +183,11 @@ var bindActions = function () {
     $('#id-button-send').on('click', function () {
         // $('#id-input-content').val();
         sendMessage();
+        return false;
     });
     // 频道切换
-    $('.rc-channel').on('click', function (e) {
+    $('.rc-channel').on('click', 'a', function (e) {
         e.preventDefault();
-        //
         var channel = $(this).text();
         changeChannel(channel);
         // 切换显示
@@ -203,12 +232,14 @@ var longTimeAgo = function () {
         $(e).text(s);
     });
 };
-//
+
 var __main = function () {
     subscribe();
     bindActions();
     // 选中第一个 channel 作为默认 channel
-    $('.rc-channel')[0].click();
+    // $('.rc-channel')[0].click();
+    currentChannel = $('.rc-channel').eq(0).find("a").text();
+    initChatStore();
     // 更新时间的函数
     setInterval(function () {
         longTimeAgo();
