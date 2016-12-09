@@ -12,6 +12,7 @@ def current_user():
     u = User.query.get(uid)
     return u
 
+
 @socketio.on('connect')
 def connect():
     print('connected', current_user().id)
@@ -30,6 +31,34 @@ def test_disconnect():
     print('Client disconnected', current_user().id)
 
 
+@socketio.on('join_channel')
+def join(channel):
+    message = {
+        'type': 'join',
+        'channel': channel,
+        'username': current_user().username,
+        'avatar': current_user().avatar,
+    }
+    print(message)
+    join_room(channel)
+    print('join channel', current_user().id)
+    emit('message', message, broadcast=True)
+
+
+@socketio.on('leave_channel')
+def leave(channel):
+    message = {
+        'type': 'left',
+        'channel': channel,
+        'username': current_user().username,
+        'avatar': current_user().avatar,
+    }
+    print(message)
+    leave_room(channel)
+    print('leave channel', current_user().id)
+    emit('message', message, broadcast=True)
+
+
 @socketio.on('text')
 def text(message):
     """Sent by a client when the user entered a new message.
@@ -38,5 +67,7 @@ def text(message):
     message['type'] = 'message'
     message['username'] = current_user().username
     message['avatar'] = current_user().avatar
+    room = message.get('channel', '大厅')
     print(message)
+    join_room(room)
     emit('message', message, broadcast=True)

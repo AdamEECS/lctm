@@ -10,4 +10,4 @@ sys.path.insert(0, abspath(dirname(__file__)))
 import app
 application = app.configured_app()
 
-# gunicorn -k gevent -w 1 ws:application
+# gunicorn --worker-class eventlet -w 1 ws

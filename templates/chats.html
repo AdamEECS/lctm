@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block board %}
+    <div id="id-div-board">
+        <h4 id="currentChannel" data-name="{{ channel_name }}">{# {{ channel_name }} - {{ channel_title }} #}</h4>
+    </div>
+{% endblock %}
+
+{% block content %}
+{#
+    {% if chats %}
+        {% for chat in chats %}
+            <div class="chat-item">
+                <div class="user">
+                    <div class="user-avatar"><img src="{{ chat.avatar }}" class="user-avatar"></div>
+                    <div class="user-info">
+                        <div class="user-name">{{ chat.name }}</div>
+                        <div class="pass-time" href="#">
+                            <time data-time="{{ chat.created_time }}"></time>
+                        </div>
+                    </div>
+                </div>
+                <div class="user_content">
+                    {{ chat.content }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+#}
+{% endblock %}

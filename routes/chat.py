@@ -1,5 +1,6 @@
 from models.chat import Chat
 from models.user import User
+from models.channel import Channel
 from routes import *
 import redis
 import json
@@ -47,8 +48,17 @@ def stream():
 @login_required
 def index():
     print('chat index')
-    ms = Model.query.all()
-    return render_template('chat_index.html', chat_list=ms)
+    # ms = Model.query.all()
+    cs = Channel.query.all()
+    # return render_template('chat_index.html', chat_list=ms)
+    return render_template('chats.html', channel_list=cs)
+
+
+@main.route('/test')
+def test():
+    cs = Channel.query.all()
+    print(cs)
+    return render_template('chats.html', channel_list=cs)
 
 
 @main.route('/add', methods=['POST'])
