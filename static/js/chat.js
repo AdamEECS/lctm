@@ -171,6 +171,7 @@ var sendMessage = function () {
     // websocket
     // socket.emit('text', message);
     socket.emit('text', message);
+    $("#id-input-content").val("");
 
 };
 
@@ -192,11 +193,12 @@ var bindActions = function () {
         changeChannel(channel);
         // 切换显示
         $('.rc-channel').removeClass('active');
-        $(this).addClass('active');
+        $(this).closest('.rc-channel').addClass('active');
         // reload 信息
-        $('#id-div-chats').empty();
+        $('#main').find('.chat-item').remove();
         var chats = chatStore[currentChannel];
         insertChats(chats);
+        return false;
     })
 };
 
