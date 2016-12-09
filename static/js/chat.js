@@ -92,7 +92,7 @@ var chatItemTemplate = function (chat) {
 };
 
 var insertChats = function (chats) {
-    var selector = '#id-div-chats'
+    var selector = '#main'
     var chatsDiv = $(selector);
     var html = chats.map(chatItemTemplate);
     chatsDiv.append(html.join(''));
@@ -100,7 +100,7 @@ var insertChats = function (chats) {
 };
 
 var insertChatItem = function (chat) {
-    var selector = '#id-div-chats'
+    var selector = '#main'
     var chatsDiv = $(selector);
     var t = chatItemTemplate(chat);
     chatsDiv.append(t);

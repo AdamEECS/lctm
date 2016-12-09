@@ -1,4 +1,7 @@
-
+html, body {
+  height: 100%;
+  width: 100%;
+}
 .pure-img-responsive {
     max-width: 100%;
     height: auto;
@@ -211,6 +214,10 @@ small screens.
 /*
 Hides the menu at `48em`, but modify this based on your app's needs.
 */
+#container, #layout {
+  height: 100%;
+}
+
 @media (min-width: 48em) {
 
     .header,
@@ -235,6 +242,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #main {
         margin: 20px;
         margin-top: 0px;
+        height: 100%;
     }
 
     .menu-link {
@@ -329,5 +337,10 @@ a.pure-menu-link.active {
     font-size: 0.8em;
     margin-left: 3em;
     display: inline-block;
+}
 
+#main {
+  height: calc(100% - 200px);
+  overflow: scroll;
+  overflow-x: hidden;
 }

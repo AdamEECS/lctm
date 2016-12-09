@@ -39,7 +39,7 @@ div#id-div-board {
 
 #id-div-panel {
     /*display: flex;*/
-    /*position: fixed;*/
+    position: fixed;
     clear: both;
     line-height: 14px;
     bottom: 0;
