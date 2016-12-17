@@ -4,7 +4,14 @@ from flask_socketio import emit
 from flask_socketio import join_room
 from flask_socketio import leave_room
 
+
 socketio = SocketIO()
+
+
+def default_channel():
+    from models.channel import Channel
+    return Channel.query.first()
+
 
 def current_user():
     from models.user import User
@@ -18,9 +25,10 @@ def connect():
     print('connected', current_user().id)
     message = {
         'type': 'join',
-        'channel': '大厅',
+        'channel': default_channel().name,
         'username': current_user().username,
         'avatar': current_user().avatar,
+        'content': '{} 加入聊天'.format(current_user().username)
     }
     print(message)
     emit('message', message, broadcast=True)
@@ -67,7 +75,7 @@ def text(message):
     message['type'] = 'message'
     message['username'] = current_user().username
     message['avatar'] = current_user().avatar
-    room = message.get('channel', '大厅')
+    room = message.get('channel', default_channel().name)
     print(message)
     join_room(room)
     emit('message', message, broadcast=True)

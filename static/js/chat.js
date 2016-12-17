@@ -42,6 +42,7 @@ var chatItemTemplate = function (chat) {
         `
     } else {
         var content = chat.content;
+        content = filterEmoji(content)
         var time = chat.created_time;
         var t = `
         <div class="chat-item burstStart read burstFinal">
